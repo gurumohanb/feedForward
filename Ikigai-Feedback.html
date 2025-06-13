@@ -47,7 +47,7 @@
   </style>
 </head>
 <body>
-
+<h1>IKIG-AI - Feedback </h1>
   <h2>Give Feedback to Your Teammate</h2>
   
   <form id="feedbackForm">
@@ -62,9 +62,9 @@
       <option value="guru">Guru</option>
 	  <option value="karthik">Karthik</option>
 	  <option value="mahalaxmi">Mahalaxmi</option>
-	  <option value="ritesh">Ritesh</option>
 	  <option value="somesh">Somesh</option>
-	  <option value="ritesh">Ritesh</option>
+	  <option value="ritesh">Ritesh</option>    
+	  <option value="tarun">Tarun</option>
     </select>
 
     <label for="top">Top (What they did well)</label>
@@ -89,7 +89,7 @@
        const top = document.getElementById("top").value; 
        const tip = document.getElementById("tip").value; 
 
-		fetch("http://localhost:5000/api/feedback", {
+		fetch("https://feedforward-swhl.onrender.com/api/feedback", {
 		  method: "POST",
 		  headers: {
 			"Content-Type": "application/json"

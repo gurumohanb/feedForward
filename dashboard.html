@@ -21,7 +21,7 @@
 <div id="feedbacks"></div>
 
 <script>
-  fetch('http://localhost:5000/feedbacks')
+  fetch('https://feedforward-swhl.onrender.com/feedbacks')
     .then(res => res.json())
     .then(data => {
       const container = document.getElementById('feedbacks');
