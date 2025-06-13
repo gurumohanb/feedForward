@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback Dashboard</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+    .feedback-card {
+      background: white;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .meta { font-size: 0.9em; color: #555; margin-bottom: 8px; }
+    .top, .tip { margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+<h2>Team Feedback Dashboard</h2>
+<div id="feedbacks"></div>
+
+<script>
+  fetch('http://localhost:5000/feedbacks')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('feedbacks');
+      if (data.length === 0) {
+        container.innerHTML = "<p>No feedback visible yet.</p>";
+        return;
+      }
+      data.forEach(fb => {
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        card.innerHTML = `
+          <div class="meta"><strong>From:</strong> ${fb.sender} | <strong>To:</strong> ${fb.recipient}</div>
+          <div class="top"><strong>Top:</strong> ${fb.top}</div>
+          <div class="tip"><strong>Tip:</strong> ${fb.tip}</div>
+          <div class="meta">${new Date(fb.createdAt).toLocaleString()}</div>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      document.getElementById('feedbacks').innerText = 'Error loading feedback.';
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>

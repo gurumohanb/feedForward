@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Feedback App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f0f4f8;
+    }
+    h2 {
+      color: #333;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    textarea, select,input {
+      width: 95%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .confirmation {
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Give Feedback to Your Teammate</h2>
+  
+  <form id="feedbackForm">
+    <label for="sender">Enter your name</label>
+    <input id="sender"></input>
+
+    <label for="recipient">Select Teammate</label>
+    <select id="recipient" required>
+      <option value="" disabled selected>Select a teammate</option>
+      <option value="ankita">Ankita</option>
+      <option value="brijesh">Brijesh</option>
+      <option value="guru">Guru</option>
+	  <option value="karthik">Karthik</option>
+	  <option value="mahalaxmi">Mahalaxmi</option>
+	  <option value="ritesh">Ritesh</option>
+	  <option value="somesh">Somesh</option>
+	  <option value="ritesh">Ritesh</option>
+    </select>
+
+    <label for="top">Top (What they did well)</label>
+    <textarea id="top" rows="3" required></textarea>
+
+    <label for="tip">Tip (How they could improve)</label>
+    <textarea id="tip" rows="3" required></textarea>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <div class="confirmation" id="confirmation" style="display:none;">
+    ✅ Your feedback has been submitted privately.
+  </div>
+
+  <script>
+     document.getElementById("feedbackForm").addEventListener("submit", function(e) { 
+       e.preventDefault(); 
+       // Here you would normally send this data to a backend via fetch/ajax 
+       const sender = document.getElementById("sender").value;
+       const recipient = document.getElementById("recipient").value; 
+       const top = document.getElementById("top").value; 
+       const tip = document.getElementById("tip").value; 
+
+		fetch("http://localhost:5000/api/feedback", {
+		  method: "POST",
+		  headers: {
+			"Content-Type": "application/json"
+		  },
+		  body: JSON.stringify({
+			sender: sender, // Replace with actual logged-in user ID
+			recipient:recipient,
+			top:top,
+			tip:tip
+		  })
+		})
+		.then(res => res.json())
+		.then(data => {
+		  document.getElementById("confirmation").style.display = "block";
+		  this.reset();
+		})
+		.catch(err => {
+		  alert("Failed to submit feedback.");
+		  console.error(err);     
+     }); 	
+	 }); 
+
+  </script>
+
+</body>
+</html>
